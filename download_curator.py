@@ -50,36 +50,3 @@ def install_curator():
         with tarfile.open(mode="r|gz", fileobj=response.raw) as tf:
             tf.extractall(path=build_path)
     
-
-class PostDevelopCommand(develop):
-    def run(self):
-        install_curator()
-        develop.run(self)
-
-
-class PostInstallCommand(install):
-    def run(self):
-        install_curator()
-        install.run(self)
-
-setup(
-    name="piphack-curator",
-    version="0.1.1",
-    description="hack to install curator through pip",
-    packages=[],
-    license="SSPLv1",
-    classifiers=[
-        "Environment :: Console",
-        "Operating System :: MacOS :: MacOS X",
-        "Operating System :: Microsoft :: Windows",
-        "Operating System :: POSIX :: Linux",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 3.9",
-    ],
-    install_requires=[],
-    tests_require=[],
-    cmdclass={
-        "develop": PostDevelopCommand,
-        "install": PostInstallCommand,
-    },
-)

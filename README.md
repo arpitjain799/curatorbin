@@ -28,5 +28,8 @@ To build for pip upload:
 ➜  piphack-curator git:(main) ✗ python3 -m twine upload --repository testpypi dist/*
 
 ```
+See the following link for [credentials](https://packaging.python.org/tutorials/packaging-projects/).
 
 Then, install with `pip3 install -vvv -i https://test.pypi.org/simple/ piphack-curator==0.7` and test before uploading to pip.
+
+You may wish to clean up old builds with `rm -rf piphack_curator.egg-info dist build`

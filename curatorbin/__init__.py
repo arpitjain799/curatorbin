@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 
-def run_curator():
+def run_curator(*args):
     current_module = __import__(__name__)
     build_path = current_module.__path__[0]
 
@@ -29,7 +29,7 @@ def run_curator():
 
         if curator_same_version : 
             # execute curator, passing along arguments
-            subprocess.check_call([curator_path] + sys.argv)
+            subprocess.check_call([curator_path, *args])
 
         else:
             errmsg = ("Found a different version of curator. "

@@ -3,14 +3,8 @@ import subprocess
 import sys
 
 def run_curator():
-    #current_module = sys.modules[__name__]
     current_module = __import__(__name__)
     build_path = current_module.__path__[0]
-    print()
-    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    print(build_path)
-    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    print()
 
     if sys.platform == "darwin":
         os_platform = "macos"
@@ -22,7 +16,7 @@ def run_curator():
         raise OSError("Unrecognized platform. "
                       "This program is meant to be run on MacOS, Windows, or Linux.")
 
-    curator_path = os.path.join(build_path, "curator")
+    curator_path = os.path.join(build_path, os_platform, "curator")
     if sys.platform == "win32":
         curator_path += ".exe"
     git_hash = "d11f83290729dc42138af106fe01bc0714c24a8b"
@@ -38,9 +32,12 @@ def run_curator():
             subprocess.check_call([curator_path] + sys.argv)
 
         else:
-            raise OSError(
-                "Found a different version of curator. Looking for '%s', but found '%s'."
-                "Something has gone terribly wrong in the python wrapper for curator", git_hash, curator_version)
+            errmsg = ("Found a different version of curator. "
+                "Looking for '{}', but found '{}'. Something has gone terribly wrong"
+                "in the python wrapper for curator").format(git_hash, curator_version)
+            raise OSError(errmsg)
     else:
-        raise OSError("Something has gone terribly wrong. curator binary not found at %s", curator_path)
+        raise OSError("Something has gone terribly wrong."
+            "curator binary not found at '{}'".format(curator_path))
+
 

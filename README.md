@@ -1,4 +1,6 @@
-Downloads curator as package data. The wheel file is a bit beefy, but curator can now be used as such:
+Downloads [curator](https://github.com/mongodb/curator) as package data. 
+
+The wheel file is a bit beefy, but curator can now be used as such:
 
 ```python
 import curatorbin
@@ -6,8 +8,13 @@ import curatorbin
 curatorbin.run_curator(first_curator_arg, second_curator_arg)
 
 ```
+Alternatively, you can get the path with `get_curator_path`.
 
 ## Building the package:
+
+Batteries not included. You have to download the binaries into curatorbin yourself.
+They are produced by an evergreen task and stored at
+`https://s3.amazonaws.com/boxes.10gen.com/build/curator/curator-dist-%s-%s.tar.gz") % (os_platform, git_hash)`
 
 First, make sure that the most current version of curator is in the appropriate dir:
 
@@ -18,14 +25,14 @@ curatorbin
 	windows-64/curator.exe
 ```
 
-Make sure the hash of the curator bin matches the hash in the `__init__.py` file.
+Make sure the hash of the curator bin matches the hash in the `curatorbin/__init__.py` file.
 
 To build for pip upload:
 
 ```
-➜  piphack-curator git:(main) ✗ pip3 install -q build
-➜  piphack-curator git:(main) ✗ python3 -m build
-➜  piphack-curator git:(main) ✗ python3 -m twine upload --repository testpypi dist/*
+pip3 install -q build
+python3 -m build
+python3 -m twine upload --repository testpypi dist/*
 
 ```
 See the following link for [credentials](https://packaging.python.org/tutorials/packaging-projects/).

@@ -5,9 +5,10 @@ from setuptools.command.develop import develop
 from setuptools.command.install import install
  
 setup(
-    name="piphack-curator",
+    name="curatorbin",
     version="0.7",
-    description="hack to install curator through pip",
+    description="install curator through pip and run it through python",
+    url="https://github.com/mongodb/curator"
     license="SSPLv1",
     classifiers=[
         "Environment :: Console",

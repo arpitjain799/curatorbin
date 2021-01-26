@@ -1,8 +1,17 @@
+'''curatorbin serves as a python wrapper for curator
+(https://github.com/mongodb/curator)
+
+get_curator_path: Returns path to curator binary, or raises error
+run_curator: Passes arguments through to curator'''
+
 import os
 import subprocess
 import sys
 
-def run_curator(*args):
+
+def get_curator_path():
+    ''' returns path to curator binary, after checking it exists and matches
+    the hardcoded git hash. If this is not the case, it raises an error'''
     current_module = __import__(__name__)
     build_path = current_module.__path__[0]
 
@@ -27,17 +36,19 @@ def run_curator(*args):
                                                    "--version"]).decode('utf-8').split()
         curator_same_version = git_hash in curator_version
 
-        if curator_same_version : 
-            # execute curator, passing along arguments
-            subprocess.check_call([curator_path, *args])
+        if curator_same_version :
+            return curator_path
 
-        else:
-            errmsg = ("Found a different version of curator. "
-                "Looking for '{}', but found '{}'. Something has gone terribly wrong"
-                "in the python wrapper for curator").format(git_hash, curator_version)
-            raise OSError(errmsg)
+        errmsg = ("Found a different version of curator. "
+            "Looking for '{}', but found '{}'. Something has gone terribly wrong"
+            "in the python wrapper for curator").format(git_hash, curator_version)
+        raise RuntimeError(errmsg)
+
     else:
-        raise OSError("Something has gone terribly wrong."
+        raise FileNotFoundError("Something has gone terribly wrong."
             "curator binary not found at '{}'".format(curator_path))
 
-
+def run_curator(*args):
+    '''runs the curator binary packaged with this module, passing along any arguments'''
+    curator_path = get_curator_path()
+    subprocess.check_call([curator_path, *args])

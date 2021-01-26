@@ -6,7 +6,7 @@ from setuptools.command.install import install
  
 setup(
     name="piphack-curator",
-    version="0.6",
+    version="0.7",
     description="hack to install curator through pip",
     license="SSPLv1",
     classifiers=[

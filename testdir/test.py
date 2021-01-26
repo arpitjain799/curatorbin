@@ -15,6 +15,8 @@ curatorpath = curatorbin.get_curator_path()
 
 print(curatorpath)
 
+#displays curator help
+curatorbin.run_curator()
 # errors
 curatorbin.run_curator('foo', 'bar')
 

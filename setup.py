@@ -8,7 +8,7 @@ setup(
     name="curatorbin",
     version="0.7",
     description="install curator through pip and run it through python",
-    url="https://github.com/mongodb/curator"
+    url="https://github.com/evergreen-ci/curatorbin",
     license="SSPLv1",
     classifiers=[
         "Environment :: Console",

@@ -5,15 +5,20 @@ import requests
 import subprocess
 import sys
 import tarfile
-import time
 
 from setuptools import setup
 from setuptools.command.develop import develop
 from setuptools.command.install import install
-
-
-def install_curator():
-    build_path = os.path.join(os.path.expanduser("~"), "build")
+ 
+def install_curator(os_platform=None):
+    build_path = os.path.dirname(os.path.realpath(__file__))
+    if os_platform:
+        build_path = os.path.join(build_path, os_platform)
+    print()
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    print(build_path)
+    print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+    print()
     curator_path = os.path.join(build_path, "curator")
 
     if sys.platform == "win32":
@@ -46,7 +51,38 @@ def install_curator():
         url = ("https://s3.amazonaws.com/boxes.10gen.com/build/curator/"
                "curator-dist-%s-%s.tar.gz") % (os_platform, git_hash)
         response = requests.get(url, stream=True)
-        print(build_path)
         with tarfile.open(mode="r|gz", fileobj=response.raw) as tf:
             tf.extractall(path=build_path)
-    
+
+class PostDevelopCommand(develop):
+    def run(self):
+        develop.run(self)
+
+
+class PostInstallCommand(install):
+    def run(self):
+        install.run(self)
+
+setup(
+    name="piphack-curator",
+    version="0.4",
+    description="hack to install curator through pip",
+    license="SSPLv1",
+    classifiers=[
+        "Environment :: Console",
+        "Operating System :: MacOS :: MacOS X",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: POSIX :: Linux",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3.9",
+    ],
+    install_requires=['requests>1.24'],
+    cmdclass={
+        "develop": PostDevelopCommand,
+        "install": PostInstallCommand,
+    },
+    packages=["curator-bin"],
+
+    package_data={"curator-bin": ["macos/curator","ubuntu-1604/curator","windows-64/curator"]}
+)
+

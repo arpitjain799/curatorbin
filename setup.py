@@ -6,10 +6,12 @@ from setuptools.command.install import install
  
 setup(
     name="curatorbin",
-    version="0.7",
+    version="0.9",
     description="install curator through pip and run it through python",
     url="https://github.com/evergreen-ci/curatorbin",
     license="SSPLv1",
+    author="Harris Hoke",
+    author_email="harris.hoke@mongodb.com",
     classifiers=[
         "Environment :: Console",
         "Operating System :: MacOS :: MacOS X",

@@ -5,6 +5,7 @@ get_curator_path: Returns path to curator binary, or raises error
 run_curator: Passes arguments through to curator'''
 
 import os
+import platform
 import subprocess
 import sys
 
@@ -17,13 +18,22 @@ def get_curator_path():
 
     if sys.platform == "darwin":
         os_platform = "macos"
+        command = ["/usr/sbin/sysctl", "-n", "machdep.cpu.brand_string"]
+        processor_info = subprocess.check_output(command).decode().strip()
     elif sys.platform == "win32":
         os_platform = "windows-64"
+        processor_info = platform.processor()
     elif sys.platform.startswith("linux"):
         os_platform = "ubuntu1604"
+        command = "cat /proc/cpuinfo"
+        processor_info = subprocess.check_output(command, shell=True).decode().strip()
     else:
         raise OSError("Unrecognized platform. "
                       "This program is meant to be run on MacOS, Windows, or Linux.")
+
+    if not "Intel" in processor_info:
+        raise OSError("Unrecognized platform. Intel processor required."
+        "Processor info: {}".format(processor_info))
 
     curator_path = os.path.join(build_path, os_platform, "curator")
     if sys.platform == "win32":

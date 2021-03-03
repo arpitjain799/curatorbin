@@ -30,13 +30,12 @@ Make sure the hash of the curator bin matches the hash in the `curatorbin/__init
 To build for pip upload:
 
 ```
-pip3 install -q build
 python3 -m build
 python3 -m twine upload --repository testpypi dist/*
 
 ```
 See the following link for [credentials](https://packaging.python.org/tutorials/packaging-projects/).
 
-Then, install with `pip3 install -vvv -i https://test.pypi.org/simple/ curatorbin==0.9` and test before uploading to pip.
+Then, install with `pip3 install -vvv -i https://test.pypi.org/simple/ curatorbin==0.12` and test before uploading to pip.
 
 You may wish to clean up old builds with `rm -rf curatorbin.egg-info dist build`

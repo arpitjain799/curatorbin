@@ -38,7 +38,7 @@ def get_curator_path():
     curator_path = os.path.join(build_path, os_platform, "curator")
     if sys.platform == "win32":
         curator_path += ".exe"
-    git_hash = "d11f83290729dc42138af106fe01bc0714c24a8b"
+    git_hash = "a91ffb61aeae8e934d50f351155c88a75e1cb614"
     curator_exists = os.path.isfile(curator_path)
     curator_same_version = False
     if curator_exists:
@@ -61,4 +61,5 @@ def get_curator_path():
 def run_curator(*args):
     '''runs the curator binary packaged with this module, passing along any arguments'''
     curator_path = get_curator_path()
-    subprocess.check_call([curator_path, *args])
+    return subprocess.check_output([curator_path, *args])
+

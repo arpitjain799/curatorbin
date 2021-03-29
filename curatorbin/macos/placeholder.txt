@@ -1,1 +1,1 @@
-place macos binary here
+https://s3.amazonaws.com/boxes.10gen.com/build/curator/curator-dist-macos-a91ffb61aeae8e934d50f351155c88a75e1cb614.tar.gz

@@ -6,7 +6,7 @@ from setuptools.command.install import install
  
 setup(
     name="curatorbin",
-    version="0.9",
+    version="0.12",
     description="install curator through pip and run it through python",
     url="https://github.com/evergreen-ci/curatorbin",
     license="SSPLv1",
@@ -21,6 +21,6 @@ setup(
         "Programming Language :: Python :: 3.9",
     ],
     packages=["curatorbin"],
-    package_data={"curatorbin": ["macos/curator","ubuntu-1604/curator","windows-64/curator.exe"]}
+    package_data={"curatorbin": ["macos/curator","ubuntu1604/curator","windows-64/curator.exe"]}
 )
 

@@ -1,0 +1,83 @@
+#######################################
+#              Parameters             #
+#######################################
+parameters:
+  - key: hash
+    value: a91ffb61aeae8e934d50f351155c88a75e1cb614
+    description: default value until I can figure out Inter-project Dependencies
+#######################################
+#              Functions              #
+#######################################
+functions:
+  get-bins:
+    command: subprocess.exec
+    type: setup 
+    params:
+      command: ./unpackBins.sh ${hash}
+      working_dir: curatorbin/curatorbin
+
+  upload-to-testpypi:
+    - command: subprocess.exec
+      type: setup
+      params:
+        command: python3 -m build
+        working_dir: curatorbin
+    - command: subprocess.exec
+      type: setup
+      params:
+        command: python3 -m twine upload --repository testpypi -u __token__ -p ${testpypi_pwd} dist/*
+        working_dir: curatorbin
+
+#######################################
+#                Tasks                #
+#######################################
+tasks:
+
+  - name: publish-to-testpypi
+    commands:
+      - command: git.get_project
+      - func: get-bins
+      - func: upload-to-testpypi
+
+  - name: test-from-pypi
+    command: subprocess.exec
+    type: test
+    params:
+      command: pytest
+      working_dir: curatorbin/testdir
+    depends_on:
+      - name: publish-to-testpypi
+
+
+#######################################
+#           Buildvariants             #
+#######################################
+buildvariants:
+
+  - name: ubuntu1604
+    display_name: Ubuntu 16.04
+    run_on:
+      - ubuntu1604-small
+    tasks:
+      - publish-to-testpypi
+      - ".test"
+
+  - name: macos
+    display_name: macOS 10.14
+      test_timeout: 15m
+    run_on:
+      - macos-1014
+    tasks:
+      - ".test"
+
+  - name: windows
+    display_name: Windows
+    run_on:
+      - windows-64-vs2019-large
+      - windows-64-vs2019-small
+      - windows-64-vs2017-large
+      - windows-64-vs2017-small
+    expansions:
+      test_timeout: 15m
+    tasks:
+      - ".test"

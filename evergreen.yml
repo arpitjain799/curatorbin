@@ -5,25 +5,29 @@ parameters:
   - key: hash
     value: a91ffb61aeae8e934d50f351155c88a75e1cb614
     description: default value until I can figure out Inter-project Dependencies
+  - key: version
+    value: 0.12
+    description: default value, should be passed in via command line or Inter-project
 #######################################
 #              Functions              #
 #######################################
 functions:
   get-bins:
     command: subprocess.exec
-    type: setup 
     params:
       command: ./unpackBins.sh ${hash}
       working_dir: curatorbin/curatorbin
 
   upload-to-testpypi:
     - command: subprocess.exec
-      type: setup
+      params:
+        command: pip3 install -q build
+        working_dir: curatorbin
+    - command: subprocess.exec
       params:
         command: python3 -m build
         working_dir: curatorbin
     - command: subprocess.exec
-      type: setup
       params:
         command: python3 -m twine upload --repository testpypi -u __token__ -p ${testpypi_pwd} dist/*
         working_dir: curatorbin
@@ -36,18 +40,24 @@ tasks:
   - name: publish-to-testpypi
     commands:
       - command: git.get_project
+        params:
+          directory: curatorbin
       - func: get-bins
       - func: upload-to-testpypi
 
   - name: test-from-pypi
-    command: subprocess.exec
-    type: test
-    params:
-      command: pytest
-      working_dir: curatorbin/testdir
+    commands:
+      - command: subprocess.exec
+        params:
+          command: pip3 install -vvv -i https://test.pypi.org/simple/ curatorbin==${version}
+      - command: subprocess.exec
+        params:
+          command: pytest
+          working_dir: curatorbin/testdir
     depends_on:
       - name: publish-to-testpypi
-
+        variant: ubuntu1604
+        status: "success"
 
 #######################################
 #           Buildvariants             #
@@ -60,15 +70,16 @@ buildvariants:
       - ubuntu1604-small
     tasks:
       - publish-to-testpypi
-      - ".test"
+      - test-from-pypi
 
   - name: macos
     display_name: macOS 10.14
+    expansions:
       test_timeout: 15m
     run_on:
       - macos-1014
     tasks:
-      - ".test"
+      - test-from-pypi
 
   - name: windows
     display_name: Windows
@@ -80,4 +91,4 @@ buildvariants:
     expansions:
       test_timeout: 15m
     tasks:
-      - ".test"
+      - test-from-pypi

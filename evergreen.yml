@@ -6,8 +6,9 @@ parameters:
     value: a91ffb61aeae8e934d50f351155c88a75e1cb614
     description: default value until I can figure out Inter-project Dependencies
   - key: version
-    value: 0.12
+    value: 0.13
     description: default value, should be passed in via command line or Inter-project
+
 #######################################
 #              Functions              #
 #######################################
@@ -21,7 +22,7 @@ functions:
   upload-to-testpypi:
     - command: subprocess.exec
       params:
-        command: pip3 install -q build
+        command: pip3 install -q build twine
         working_dir: curatorbin
     - command: subprocess.exec
       params:
@@ -47,27 +48,55 @@ tasks:
 
   - name: test-from-pypi
     commands:
+      - command: git.get_project
+        type: setup
+        params:
+          directory: curatorbin
+      - command: subprocess.exec
+        params:
+          command: pip3 install pytest
       - command: subprocess.exec
         params:
           command: pip3 install -vvv -i https://test.pypi.org/simple/ curatorbin==${version}
       - command: subprocess.exec
         params:
-          command: pytest
+          command: python3 -m pytest
           working_dir: curatorbin/testdir
     depends_on:
       - name: publish-to-testpypi
-        variant: ubuntu1604
-        status: "success"
+        variant: ubuntu2004
+        status: "*"
+
+  - name: test-from-pypi-windows
+    commands:
+      - command: git.get_project
+        type: setup
+        params:
+          directory: curatorbin
+      - command: subprocess.exec
+        params:
+          command: pip3 install pytest
+      - command: subprocess.exec
+        params:
+          command: pip3 install -vvv -i https://test.pypi.org/simple/ curatorbin==${version}
+      - command: subprocess.exec
+        params:
+          command: 'c:\\python39\\python.exe -m pytest'
+          working_dir: curatorbin/testdir
+    depends_on:
+      - name: publish-to-testpypi
+        variant: ubuntu2004
+        status: "*"
 
 #######################################
 #           Buildvariants             #
 #######################################
 buildvariants:
 
-  - name: ubuntu1604
-    display_name: Ubuntu 16.04
+  - name: ubuntu2004
+    display_name: Ubuntu 20.04
     run_on:
-      - ubuntu1604-small
+      - ubuntu2004-small
     tasks:
       - publish-to-testpypi
       - test-from-pypi
@@ -91,4 +120,4 @@ buildvariants:
     expansions:
       test_timeout: 15m
     tasks:
-      - test-from-pypi
+      - test-from-pypi-windows

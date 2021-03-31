@@ -19,7 +19,5 @@ Run the following:
 cd curatorbin
 ./unpackBins.sh <your hash>
 ```
-
 You can then use the `publish-to-testpypi` evergreen task for publishing once you commit.
 
-You may wish to clean up old builds with `rm -rf curatorbin.egg-info dist build`

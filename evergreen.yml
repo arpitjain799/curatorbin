@@ -107,7 +107,6 @@ buildvariants:
       test_timeout: 15m
     run_on:
       - macos-1014
-      - macos-1012
       - macos-1015
     tasks:
       - test-from-pypi

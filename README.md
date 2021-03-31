@@ -12,7 +12,7 @@ Alternatively, you can get the path with `get_curator_path`.
 
 ## Building the package:
 
-Make sure you edit the hash in `testdir/test_basic.py` and the version in the `setup.py`.
+Make sure you edit the hash in `testdir/test_basic.py` and the version in the `setup.py` and `evergreen.yml`.
 
 Run the following:
 ```

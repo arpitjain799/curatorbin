@@ -3,10 +3,10 @@
 #######################################
 parameters:
   - key: hash
-    value: a91ffb61aeae8e934d50f351155c88a75e1cb614
+    value: dc9866a73826046495a1898d57acff12124cdd25
     description: default value until I can figure out Inter-project Dependencies
   - key: version
-    value: 0.14
+    value: 0.15
     description: default value, should be passed in via command line or Inter-project
 
 #######################################

@@ -12,7 +12,7 @@ import pytest
 import subprocess
 import importlib.resources
 
-VERSION_STRING = 'curator version a91ffb61aeae8e934d50f351155c88a75e1cb614'
+VERSION_STRING = 'curator version dc9866a73826046495a1898d57acff12124cdd25'
 
 def test_path():
     curatorpath = curatorbin.get_curator_path()

@@ -13,7 +13,8 @@ Alternatively, you can get the path with `get_curator_path`.
 ## Building the package:
 
 Make sure you edit the hash in `testdir/test_basic.py`, `curatorbin/__init__.py` and `evergreen.yml`.
-Also, increment the version in the `setup.py` and `evergreen.yml`.
+Also, increment the version in the `setup.py` and `evergreen.yml`. 
+The `placeholder.txt` files do not need to be updated, as the `get-bins` function in the evergreen yaml does this automatically.
 
 Run the following:
 ```

@@ -62,6 +62,7 @@ tasks:
       - func: upload-to-testpypi
 
   - name: publish-to-pypi
+    patchable: false
     commands:
       - command: git.get_project
         params:

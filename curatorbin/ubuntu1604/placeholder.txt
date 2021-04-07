@@ -1,1 +1,1 @@
-https://s3.amazonaws.com/boxes.10gen.com/build/curator/curator-dist-ubuntu1604-a91ffb61aeae8e934d50f351155c88a75e1cb614.tar.gz
+https://s3.amazonaws.com/boxes.10gen.com/build/curator/curator-dist-ubuntu1604-2c7c75c55bc4a4794eebdec85c8de42c44d2e901.tar.gz

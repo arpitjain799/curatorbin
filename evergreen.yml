@@ -33,6 +33,21 @@ functions:
         command: python3 -m twine upload --repository testpypi -u __token__ -p ${testpypi_pwd} dist/*
         working_dir: curatorbin
 
+  upload-to-pypi:
+    - command: subprocess.exec
+      params:
+        command: pip3 install -q build twine
+        working_dir: curatorbin
+    - command: subprocess.exec
+      params:
+        command: python3 -m build
+        working_dir: curatorbin
+    - command: subprocess.exec
+      params:
+        command: python3 -m twine upload -u __token__ -p ${pypi_pwd} dist/*
+        working_dir: curatorbin
+
+
 #######################################
 #                Tasks                #
 #######################################
@@ -45,6 +60,24 @@ tasks:
           directory: curatorbin
       - func: get-bins
       - func: upload-to-testpypi
+
+  - name: publish-to-pypi
+    commands:
+      - command: git.get_project
+        params:
+          directory: curatorbin
+      - func: get-bins
+      - func: upload-to-pypi
+    depends_on:
+      - name: test-from-pypi
+        variant: ubuntu2004
+        status: "success"
+      - name: test-from-pypi
+        variant: macos
+        status: "success"
+      - name: test-from-pypi
+        variant: windows
+        status: "success"
 
   - name: test-from-pypi
     commands:

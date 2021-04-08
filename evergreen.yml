@@ -133,6 +133,7 @@ buildvariants:
       - ubuntu2004-small
     tasks:
       - publish-to-testpypi
+      - publish-to-pypi
       - test-from-pypi
 
   - name: macos

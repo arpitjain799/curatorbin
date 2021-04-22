@@ -6,7 +6,7 @@ parameters:
     value: a251eabef5ed6ae71de5626de9a9a0ef8fda0968
     description: default value until I can figure out Inter-project Dependencies
   - key: version
-    value: 1.2.0
+    value: 1.2.1
     description: default value, should be passed in via command line or Inter-project
 
 #######################################

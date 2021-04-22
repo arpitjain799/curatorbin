@@ -1,3 +1,6 @@
 build/
 dist/
 curatorbin.egg-info/
+
+*/**/curator
+*/**/curator.exe

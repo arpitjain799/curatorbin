@@ -1,1 +1,1 @@
-https://s3.amazonaws.com/boxes.10gen.com/build/curator/curator-dist-macos-4e006115921edd2d3ac5cac8d2d78d7a9ed908d2.tar.gz
+https://s3.amazonaws.com/boxes.10gen.com/build/curator/curator-dist-macos-a251eabef5ed6ae71de5626de9a9a0ef8fda0968.tar.gz

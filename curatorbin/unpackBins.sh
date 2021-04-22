@@ -19,6 +19,9 @@ function downloadTar {
 	popd
 }
 
+downloadTar arm
 downloadTar macos
+downloadTar macos-arm64
 downloadTar ubuntu1604
 downloadTar windows-64
+

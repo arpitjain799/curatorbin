@@ -1,0 +1,1 @@
+https://s3.amazonaws.com/boxes.10gen.com/build/curator/curator-dist-arm-a251eabef5ed6ae71de5626de9a9a0ef8fda0968.tar.gz

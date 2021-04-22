@@ -3,10 +3,10 @@
 #######################################
 parameters:
   - key: hash
-    value: 4e006115921edd2d3ac5cac8d2d78d7a9ed908d2
+    value: a251eabef5ed6ae71de5626de9a9a0ef8fda0968
     description: default value until I can figure out Inter-project Dependencies
   - key: version
-    value: 1.1
+    value: 1.2
     description: default value, should be passed in via command line or Inter-project
 
 #######################################
@@ -136,6 +136,13 @@ buildvariants:
       - publish-to-pypi
       - test-from-pypi
 
+  - name: ubuntu2004-arm64
+    display_name: Ubuntu 20.04 ARM
+    run_on:
+      - ubuntu2004-arm64-small
+    tasks:
+      - test-from-pypi
+
   - name: macos
     display_name: macOS 10.14
     expansions:
@@ -143,6 +150,15 @@ buildvariants:
     run_on:
       - macos-1014
       - macos-1015
+    tasks:
+      - test-from-pypi
+
+  - name: macos-arm64
+    display_name: macOS 11 ARM
+    expansions:
+      test_timeout: 15m
+    run_on:
+      - macos-1100-arm64
     tasks:
       - test-from-pypi
 

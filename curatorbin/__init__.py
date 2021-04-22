@@ -60,7 +60,7 @@ def get_curator_path():
     curator_path = os.path.join(build_path, os_platform, "curator")
     if sys.platform == "win32":
         curator_path += ".exe"
-    git_hash = "4e006115921edd2d3ac5cac8d2d78d7a9ed908d2"
+    git_hash = "a251eabef5ed6ae71de5626de9a9a0ef8fda0968"
     curator_exists = os.path.isfile(curator_path)
 
     if curator_exists:
@@ -73,7 +73,7 @@ def get_curator_path():
 
         errmsg = ("Found a different version of curator. "
             "Looking for '{}', but found '{}'. Something has gone terribly wrong"
-            "in the python wrapper for curator").format(git_hash, curator_version)
+            " in the python wrapper for curator").format(git_hash, curator_version)
         raise RuntimeError(errmsg)
 
     else:

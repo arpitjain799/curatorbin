@@ -1,6 +1,6 @@
 #!/bin/bash
 ## unpackBins.sh is to be run in the curatorbin directory, under which 
-# subdirectories e.g. macos, ubundu1604, exist. It downloads curator binaries,
+# subdirectories e.g. macos, ubuntu1804, exist. It downloads curator binaries,
 # unpacks them, and updates the log.
 set -xeo
 
@@ -22,6 +22,6 @@ function downloadTar {
 downloadTar arm
 downloadTar macos
 downloadTar macos-arm64
-downloadTar ubuntu1604
+downloadTar ubuntu1804
 downloadTar windows-64
 

@@ -26,7 +26,7 @@ setup(
             "arm/curator",
             "macos/curator",
             "macos-arm64/curator",
-            "ubuntu1604/curator",
+            "ubuntu1804/curator",
             "windows-64/curator.exe"
         ]
     }

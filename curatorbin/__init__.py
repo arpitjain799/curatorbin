@@ -16,7 +16,7 @@ class OSPlatform(object):
     MACOS_x64 = "macos"
     MACOS_arm64 = "macos-arm64"
     WINDOWS_x64 = "windows-64"
-    LINUX_x64 = "ubuntu1804"
+    LINUX_x64 = "ubuntu"
     LINUX_arm64 = "arm"
 
 

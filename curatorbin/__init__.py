@@ -60,7 +60,7 @@ def get_curator_path():
     curator_path = os.path.join(build_path, os_platform, "curator")
     if sys.platform == "win32":
         curator_path += ".exe"
-    git_hash = "a251eabef5ed6ae71de5626de9a9a0ef8fda0968"
+    git_hash = "2230334f0369ea999b8fd2ada0de61e4b4a6e2b0"
     curator_exists = os.path.isfile(curator_path)
 
     if curator_exists:

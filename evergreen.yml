@@ -22,30 +22,60 @@ functions:
   upload-to-testpypi:
     - command: subprocess.exec
       params:
-        command: pip3 install -q build twine
+        command: python3 -m venv ./venv
         working_dir: curatorbin
     - command: subprocess.exec
       params:
-        command: python3 -m build
+        command: ./venv/bin/pip3 install -q build twine
         working_dir: curatorbin
     - command: subprocess.exec
       params:
-        command: python3 -m twine upload --repository testpypi -u __token__ -p ${testpypi_pwd} dist/*
+        command: ./venv/bin/python3 -m build
+        working_dir: curatorbin
+    - command: subprocess.exec
+      params:
+        command: ./venv/bin/python3 -m twine upload --repository testpypi -u __token__ -p ${testpypi_pwd} dist/*
         working_dir: curatorbin
 
   upload-to-pypi:
     - command: subprocess.exec
       params:
-        command: pip3 install -q build twine
+        command: python3 -m venv ./venv
         working_dir: curatorbin
     - command: subprocess.exec
       params:
-        command: python3 -m build
+        command: ./venv/bin/pip3 install -q build twine
         working_dir: curatorbin
     - command: subprocess.exec
       params:
-        command: python3 -m twine upload -u __token__ -p ${pypi_pwd} dist/*
+        command: ./venv/bin/python3 -m build
         working_dir: curatorbin
+    - command: subprocess.exec
+      params:
+        command: ./venv/bin/python3 -m twine upload -u __token__ -p ${pypi_pwd} dist/*
+        working_dir: curatorbin
+
+  pytest:
+    - command: git.get_project
+      params:
+        directory: curatorbin
+    - command: subprocess.exec
+      params:
+        command: python3 -m venv ./venv
+        directory: curatorbin
+    - command: subprocess.exec
+      params:
+        command: ./venv/bin/pip3 install pytest
+        directory: curatorbin
+    - command: subprocess.exec
+      params:
+        command: ./venv/bin/pip3 install -vvv -i https://test.pypi.org/simple/ curatorbin==${version}
+        directory: curatorbin
+    - command: shell.exec
+      params:
+        command: ../venv/bin/python3 -m pytest
+        working_dir: curatorbin/testdir
+
 
 
 #######################################
@@ -80,26 +110,26 @@ tasks:
         variant: windows
         status: success
 
-  - name: test-from-pypi
+  - name: test-from-pypi-arm
     commands:
-      - command: git.get_project
+      - command: subprocess.exec
         type: setup
         params:
-          directory: curatorbin
-      - command: subprocess.exec
-        params:
-          command: pip3 install pytest
-      - command: subprocess.exec
-        params:
-          command: pip3 install -vvv -i https://test.pypi.org/simple/ curatorbin==${version}
-      - command: subprocess.exec
-        params:
-          command: python3 -m pytest
-          working_dir: curatorbin/testdir
+          command: sudo apt install python3.8-venv
+      - func: pytest
     depends_on:
       - name: publish-to-testpypi
         variant: ubuntu2004
         status: "*"
+
+  - name: test-from-pypi
+    commands:
+      - func: pytest
+    depends_on:
+      - name: publish-to-testpypi
+        variant: ubuntu2004
+        status: "*"
+
 
   - name: test-from-pypi-windows
     commands:
@@ -109,13 +139,19 @@ tasks:
           directory: curatorbin
       - command: subprocess.exec
         params:
-          command: pip3 install pytest
-      - command: subprocess.exec
+          command: 'c:\\python39\\python.exe -m venv ./venv'
+          directory: curatorbin
+      - command: shell.exec
         params:
-          command: pip3 install -vvv -i https://test.pypi.org/simple/ curatorbin==${version}
-      - command: subprocess.exec
+          command: ./venv/bin/pip3 install pytest
+          directory: curatorbin
+      - command: shell.exec
         params:
-          command: 'c:\\python39\\python.exe -m pytest'
+          command: ./venv/bin/pip3 install -vvv -i https://test.pypi.org/simple/ curatorbin==${version}
+          directory: curatorbin
+      - command: shell.exec
+        params:
+          command: ../venv/bin/python3 -m pytest
           working_dir: curatorbin/testdir
     depends_on:
       - name: publish-to-testpypi
@@ -141,7 +177,7 @@ buildvariants:
     run_on:
       - ubuntu2004-arm64-small
     tasks:
-      - test-from-pypi
+      - test-from-pypi-arm
 
   - name: macos
     display_name: macOS 10.14

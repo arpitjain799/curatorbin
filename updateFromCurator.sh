@@ -32,4 +32,4 @@ else
 	exit
 fi
 
-perl -p -i -e "s/${old_version}/${replacement}/g" setup.py
+perl -p -i -e "s/${old_version}/${replacement}/g" setup.py evergreen.yml

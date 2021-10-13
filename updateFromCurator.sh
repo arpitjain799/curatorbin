@@ -17,17 +17,19 @@ old_version=$(grep "version=" setup.py | awk -F '"' '{print $2}')
 
 semVer=$(echo "${1}" | awk '{print tolower($0)}')
 
-if [ "{semVer}" == "major" ]
+if [ "${semVer}" == "major" ]
 then
 	replacement=$(echo ${old_version} | awk -F "." '{print $1+1".0.0"}')
-elif [ "{semVer}" == "minor" ]
+elif [ "${semVer}" == "minor" ]
 then
 	replacement=$(echo ${old_version} | awk -F "." '{print $1"."$2+1".0"}')
-elif [ "{semVer}" == "patch" ]
+elif [ "${semVer}" == "patch" ]
 then
 	replacement=$(echo ${old_version} | awk -F "." '{print $1"."$2"."$3+1}')
 
 else
 	echo "'${1}' is not major, minor, or patch"
+	exit
 fi
+
 perl -p -i -e "s/${old_version}/${replacement}/g" setup.py

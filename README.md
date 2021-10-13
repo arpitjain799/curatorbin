@@ -1,5 +1,7 @@
 Downloads [curator](https://github.com/mongodb/curator) as package data. 
 
+## Usage
+
 The wheel file is a bit beefy, but curator can now be used as such:
 
 ```python
@@ -12,8 +14,9 @@ Alternatively, you can get the path with `get_curator_path`.
 
 ## Building the package:
 
+You can use `updateFromCurator.sh ${MAJOR_INC}.${MINOR_INC}.${PATCH_INC}` for this.
+For example, `updateFromCurator.sh 0.1.0
 Make sure you edit the hash in `testdir/test_basic.py`, `curatorbin/__init__.py` and `evergreen.yml`. 
-You can use `./changeover.sh ${OLD_HASH} ${NEW_HASH}` for this.
 
 Also, increment the version in the `setup.py` and `evergreen.yml` files. 
 

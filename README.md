@@ -14,9 +14,9 @@ Alternatively, you can get the path with `get_curator_path`.
 
 ## Building the package:
 
-You can use `updateFromCurator.sh <major|minor|patch>` for this.
+You can use `./updateFromCurator.sh <major|minor|patch>` for this.
 
-For example, `updateFromCurator.sh minor` will update the minor version, which would turn `1.2.3` to `1.3.0` in setup.py.
+For example, `./updateFromCurator.sh minor` will update the minor version, which would turn `1.2.3` to `1.3.0` in setup.py.
 
 This will be used to increment the version in the `setup.py` and `evergreen.yml` files. 
 It also replaces with the latest curator hash the hash in `testdir/test_basic.py`, `curatorbin/__init__.py` and `evergreen.yml`. 

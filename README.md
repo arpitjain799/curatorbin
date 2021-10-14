@@ -18,7 +18,7 @@ You can use `./update_from_curator.sh <major|minor|patch>` for this.
 
 For example, `./update_from_curator.sh minor` will update the minor version, which would turn `1.2.3` to `1.3.0` in setup.py.
 
-After running `updateFromCurator.sh`, commit and run a mainline or patch build.
+After running `update_from_curator.sh`, commit and run a mainline or patch build.
 Make sure to use the `publish-to-testpypi` evergreen task.
 This will only finish successfully once.
 Subsequent runs will fail unless you also increment the version.

@@ -14,7 +14,7 @@ old_hash=$(grep "VERSION_STRING =" testdir/test_basic.py | awk '{print $5}')
 old_hash_stripped=${old_hash%\'}
 ./changeover.sh ${old_hash_stripped} ${new_hash}
 
-#This will be used to increment the version in the `setup.py` and `evergreen.yml` files.
+# This will be used to increment the version in the `setup.py` and `evergreen.yml` files.
 old_version=$(grep "version=" setup.py | awk -F '"' '{print $2}')
 
 sem_ver=$(echo "${1}" | awk '{print tolower($0)}')

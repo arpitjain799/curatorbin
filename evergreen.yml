@@ -139,7 +139,7 @@ tasks:
           directory: curatorbin
       - command: subprocess.exec
         params:
-          command: 'c:\\python39\\python.exe -m venv ./venv'
+          command: 'c:\\python310\\python.exe -m venv ./venv'
           directory: curatorbin
       - command: shell.exec
         params:

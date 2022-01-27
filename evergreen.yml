@@ -201,10 +201,8 @@ buildvariants:
   - name: windows
     display_name: Windows
     run_on:
-      - windows-64-vs2017-small
       - windows-64-vs2019-small
       - windows-64-vs2019-large
-      - windows-64-vs2017-large
     expansions:
       test_timeout: 15m
     tasks:

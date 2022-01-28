@@ -139,7 +139,7 @@ tasks:
           directory: curatorbin
       - command: subprocess.exec
         params:
-          command: 'c:\\python39\\python.exe -m venv ./venv'
+          command: 'c:\\python310\\python.exe -m venv ./venv'
           directory: curatorbin
       - command: shell.exec
         params:
@@ -201,10 +201,8 @@ buildvariants:
   - name: windows
     display_name: Windows
     run_on:
-      - windows-64-vs2017-small
       - windows-64-vs2019-small
       - windows-64-vs2019-large
-      - windows-64-vs2017-large
     expansions:
       test_timeout: 15m
     tasks:

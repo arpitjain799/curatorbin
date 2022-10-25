@@ -6,7 +6,7 @@ from setuptools.command.install import install
  
 setup(
     name="curatorbin",
-    version="1.2.4",
+    version="1.2.5",
     description="install curator through pip and run it through python",
     url="https://github.com/evergreen-ci/curatorbin",
     license="SSPLv1",

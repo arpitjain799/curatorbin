@@ -71,11 +71,6 @@ functions:
       params:
         command: ./venv/bin/pip3 install -vvv -i https://test.pypi.org/simple/ curatorbin==${version}
         directory: curatorbin
-    - command: shell.exec
-      params:
-        command: ../venv/bin/python3 -m pytest
-        working_dir: curatorbin/testdir
-
 
 
 #######################################
@@ -141,18 +136,6 @@ tasks:
         params:
           command: 'c:\\python310\\python.exe -m venv ./venv'
           directory: curatorbin
-      - command: shell.exec
-        params:
-          command: ./venv/bin/pip3 install pytest
-          directory: curatorbin
-      - command: shell.exec
-        params:
-          command: ./venv/bin/pip3 install -vvv -i https://test.pypi.org/simple/ curatorbin==${version}
-          directory: curatorbin
-      - command: shell.exec
-        params:
-          command: ../venv/bin/python3 -m pytest
-          working_dir: curatorbin/testdir
     depends_on:
       - name: publish-to-testpypi
         variant: ubuntu2004
